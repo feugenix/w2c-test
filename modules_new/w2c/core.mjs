@@ -1,4 +1,4 @@
-import uniqid from 'uniqid';
+// import uniqid from 'uniqid';
 
 let promises = {};
 
@@ -23,7 +23,8 @@ export function sendCommand({
         return Promise.reject('no transport');
     }
 
-    id = uniqid(transportProps.prefix);
+    // id = uniqid(transportProps.prefix);
+    id = `${transportProps.prefix}${Math.random()}`;
 
     transport({
         request: JSON.stringify({
@@ -57,3 +58,27 @@ export function sendCommand({
             return value;
         });
 };
+
+export function bindModules(
+    modules = [],
+    bindedSendCommand = () => {}
+) {
+
+    if (!(modules instanceof Array)) {
+        modules = [modules];
+    }
+
+    return modules.reduce((acc, module) => {
+        Object.keys(module || {}).forEach((methodName) => {
+            let method = module[methodName];
+
+            if (typeof method === 'function') {
+                acc[methodName] = method.bind(undefined, {
+                    sendCommand: bindedSendCommand
+                });
+            }
+        });
+
+        return acc;
+    }, {});
+}

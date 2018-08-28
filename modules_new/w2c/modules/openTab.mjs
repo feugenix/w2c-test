@@ -2,7 +2,10 @@ export function openHangar({sendCommand}) {
     return sendCommand({
         command: 'open_tab',
         params: {
-            tab_id: 'hangar'
+            commandParams: {
+                tab_id: 'hangar'
+            },
+            noResponse: true
         }
     });
 };

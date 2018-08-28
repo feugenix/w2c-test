@@ -1,26 +1,35 @@
 export function playSound({sendCommand}, soundId) {
     return sendCommand({
-        command: SOUND_COMMAND_ID,
+        command: 'sound',
         params: {
-            sound_id: soundId
+            commandParams: {
+                sound_id: soundId
+            },
+            noResponse: true
         }
     });
 };
 
 export function muteSound({sendCommand}) {
     return sendCommand({
-        command: HANGAR_SOUND_COMMAND,
+        command: 'hangar_sound',
         params: {
-            mute: true
+            commandParams: {
+                mute: true
+            },
+            noResponse: true
         }
     });
 };
 
 export function unmuteSound({sendCommand}) {
     return sendCommand({
-        command: HANGAR_SOUND_COMMAND,
+        command: 'hangar_sound',
         params: {
-            mute: false
+            commandParams: {
+                mute: false
+            },
+            noResponse: true
         }
     });
 };
